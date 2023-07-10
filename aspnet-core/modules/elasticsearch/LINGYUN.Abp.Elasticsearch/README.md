@@ -28,7 +28,7 @@ public class YouProjectModule : AbpModule
 ```json
 {
   "Elasticsearch": {
-    "NodeUris": "http://localhost:9200"
+    "NodeUris": "http://127.0.0.1:9200"
   }
 }
 
