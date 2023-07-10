@@ -250,7 +250,7 @@ namespace LINGYUN.Abp.UI.Navigation.VueVbenAdmin
                     description: "Api 文档",
                     multiTenancySides: MultiTenancySides.Host)
                 // TODO: 注意在部署完毕之后手动修改此菜单iframe地址
-                .SetProperty("frameSrc", "http://127.0.0.1:30000/swagger/index.html"));
+                .SetProperty("frameSrc", "http://127.0.0.1:40000/swagger/index.html"));
 
             manage.AddItem(
                 new ApplicationMenu(
