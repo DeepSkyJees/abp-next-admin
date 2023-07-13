@@ -27,6 +27,7 @@ using Volo.Abp.EntityFrameworkCore.MySQL;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
+//using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 
 namespace LY.MicroService.IdentityServer;
@@ -96,6 +97,7 @@ public partial class IdentityServerHttpApiHostModule : AbpModule
         ConfigureCors(context.Services, configuration);
         ConfigureDistributedLocking(context.Services, configuration);
         ConfigureSecurity(context.Services, configuration, hostingEnvironment.IsDevelopment());
+        ConfigureSeedWorker(context.Services, hostingEnvironment.IsDevelopment());
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    
+    
+
+    <PropertyGroup><LangVersion>latest</LangVersion>
+        <TargetFramework>net7.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.Theming" Version="7.3.0-rc.2" />
+        <ProjectReference Include="..\Volo.Abp.PermissionManagement.HttpApi.Client\Volo.Abp.PermissionManagement.HttpApi.Client.csproj" />
+    </ItemGroup>
+
+</Project>

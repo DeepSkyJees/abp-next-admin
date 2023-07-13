@@ -29,6 +29,8 @@ public class TenantSynchronizer : IDistributedEventHandler<CreateEventData>, ITr
     protected IPermissionDataSeeder PermissionDataSeeder { get; }
     protected IDbSchemaMigrator DbSchemaMigrator { get; }
 
+    protected IPermissionDefinitionManager IPermissionDefinitionManager { get;}
+
     public TenantSynchronizer(
         ICurrentTenant currentTenant,
         IGuidGenerator guidGenerator,
@@ -36,9 +38,10 @@ public class TenantSynchronizer : IDistributedEventHandler<CreateEventData>, ITr
         IdentityRoleManager identityRoleManager,
         IPermissionDataSeeder permissionDataSeeder,
         IDbSchemaMigrator dbSchemaMigrator,
-        ILogger<TenantSynchronizer> logger)
+        ILogger<TenantSynchronizer> logger, IPermissionDefinitionManager permissionDefinitionManager)
     {
         Logger = logger;
+        IPermissionDefinitionManager = permissionDefinitionManager;
         CurrentTenant = currentTenant;
         GuidGenerator = guidGenerator;
         IdentityUserManager = identityUserManager;
@@ -92,7 +95,7 @@ public class TenantSynchronizer : IDistributedEventHandler<CreateEventData>, ITr
             defaultRole.Name,
             new string[] {
                     IdentityPermissions.UserLookup.Default,
-                    IdentityPermissions.Users.Default
+                    IdentityPermissions.Users.Default,
             });
     }
 

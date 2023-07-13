@@ -14,8 +14,11 @@ using Volo.Abp.IdentityServer.ApiScopes;
 using Volo.Abp.IdentityServer.Clients;
 using Volo.Abp.IdentityServer.IdentityResources;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.PermissionManagement;
 using Volo.Abp.Uow;
+using System.Xml.Linq;
+using Volo.Abp.PermissionManagement;
+
+//using Volo.Abp.PermissionManagement;
 
 namespace LY.MicroService.IdentityServer.EntityFrameworkCore.DataSeeder;
 
@@ -31,6 +34,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
     private readonly IPermissionDataSeeder _permissionDataSeeder;
     private readonly IConfiguration _configuration;
     private readonly ICurrentTenant _currentTenant;
+    private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
     public IdentityServerDataSeedContributor(
         IClientRepository clientRepository,
@@ -42,7 +46,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         ICustomIdentityResourceDataSeeder customIdentityResourceDataSeeder,
         IGuidGenerator guidGenerator,
         ICurrentTenant currentTenant,
-        IConfiguration configuration)
+        IConfiguration configuration, IPermissionDefinitionManager permissionDefinitionManager)
     {
         _currentTenant = currentTenant;
         _clientRepository = clientRepository;
@@ -54,13 +58,16 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
         _customIdentityResourceDataSeeder = customIdentityResourceDataSeeder;
         _guidGenerator = guidGenerator;
         _configuration = configuration;
+        _permissionDefinitionManager = permissionDefinitionManager;
     }
 
     [UnitOfWork]
     public async virtual Task SeedAsync(DataSeedContext context)
     {
+        //await PermissionSeedAsync(context);
         using (_currentTenant.Change(context?.TenantId))
         {
+
             await _identityResourceDataSeeder.CreateStandardResourcesAsync();
             await _customIdentityResourceDataSeeder.CreateCustomResourcesAsync();
             await CreateWeChatClaimTypeAsync();
@@ -69,6 +76,25 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
             await CreateClientsAsync();
         }
     }
+
+    public async Task PermissionSeedAsync(DataSeedContext context)
+    {
+        var multiTenancySide = _currentTenant.GetMultiTenancySide();
+        var permissionNamesT = await _permissionDefinitionManager.GetPermissionsAsync();
+
+        var permissionNames = permissionNamesT.Where(p => p.MultiTenancySide.HasFlag(multiTenancySide))
+             .Where(p => !p.Providers.Any() || p.Providers.Contains(RolePermissionValueProvider.ProviderName))
+             .Select(p => p.Name)
+             .ToArray();
+
+        await _permissionDataSeeder.SeedAsync(
+            RolePermissionValueProvider.ProviderName,
+            "admin",
+            permissionNames,
+            context?.TenantId
+        );
+    }
+
 
     private async Task CreateWeChatClaimTypeAsync()
     {
@@ -291,6 +317,7 @@ public class IdentityServerDataSeedContributor : IDataSeedContributor, ITransien
 
         if (permissions != null)
         {
+
             await _permissionDataSeeder.SeedAsync(ClientPermissionValueProvider.ProviderName, name, permissions);
         }
 

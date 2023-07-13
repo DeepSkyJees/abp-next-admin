@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  
+  
+
+  <PropertyGroup><LangVersion>latest</LangVersion>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>Volo.Abp.PermissionManagement.EntityFrameworkCore</AssemblyName>
+    <PackageId>Volo.Abp.PermissionManagement.EntityFrameworkCore</PackageId>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Volo.Abp.PermissionManagement.Domain\Volo.Abp.PermissionManagement.Domain.csproj" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="7.2.2" />
+  </ItemGroup>
+
+</Project>

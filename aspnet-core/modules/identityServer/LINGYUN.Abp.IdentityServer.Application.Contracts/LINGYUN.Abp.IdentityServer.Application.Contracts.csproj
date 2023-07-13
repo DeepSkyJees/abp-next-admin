@@ -24,4 +24,6 @@
 		<PackageReference Include="Volo.Abp.IdentityServer.Domain.Shared" Version="$(VoloAbpPackageVersion)" />
 	</ItemGroup>
 
+
+
 </Project>

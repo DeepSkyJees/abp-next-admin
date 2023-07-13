@@ -15,6 +15,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="$(VoloAbpPackageVersion)" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Domain" Version="$(VoloAbpPackageVersion)" />
 	</ItemGroup>
+
+	<!--<ItemGroup>
+	  <ProjectReference Include="..\..\..\git-module\permissionmanagement\Volo.Abp.PermissionManagement.Domain\Volo.Abp.PermissionManagement.Domain.csproj" />
+	</ItemGroup>-->
 
 </Project>

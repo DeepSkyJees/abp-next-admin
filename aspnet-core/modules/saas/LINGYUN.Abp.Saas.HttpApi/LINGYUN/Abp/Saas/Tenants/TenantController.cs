@@ -8,7 +8,7 @@ using Volo.Abp.Application.Dtos;
 namespace LINGYUN.Abp.Saas.Tenants;
 
 [Controller]
-[Authorize(AbpSaasPermissions.Tenants.Default)]
+//[Authorize(AbpSaasPermissions.Tenants.Default)]
 [RemoteService(Name = AbpSaasRemoteServiceConsts.RemoteServiceName)]
 [Area(AbpSaasRemoteServiceConsts.ModuleName)]
 [Route("api/saas/tenants")]
@@ -42,7 +42,7 @@ public class TenantController : AbpSaasControllerBase, ITenantAppService
     }
 
     [HttpPost]
-    [Authorize(AbpSaasPermissions.Tenants.Create)]
+    //[Authorize(AbpSaasPermissions.Tenants.Create)]
     public virtual Task<TenantDto> CreateAsync(TenantCreateDto input)
     {
         return TenantAppService.CreateAsync(input);

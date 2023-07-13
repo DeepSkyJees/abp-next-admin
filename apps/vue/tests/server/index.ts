@@ -59,5 +59,5 @@ app.use(router.allowedMethods());
 app.use(koaStatic(path.join(__dirname)));
 
 app.listen(PORT, () => {
-  console.log(`Application started successfully: http://localhost:${PORT}`);
+  console.log(`Application started successfully: http://127.0.0.1:${PORT}`);
 });

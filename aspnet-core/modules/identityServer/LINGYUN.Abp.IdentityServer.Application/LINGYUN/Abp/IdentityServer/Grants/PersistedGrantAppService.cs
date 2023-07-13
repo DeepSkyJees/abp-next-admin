@@ -1,21 +1,27 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.IdentityServer.Grants;
 
 namespace LINGYUN.Abp.IdentityServer.Grants
 {
-    [Authorize(AbpIdentityServerPermissions.Grants.Default)]
+    //[Authorize(AbpIdentityServerPermissions.Grants.Default)]
     public class PersistedGrantAppService : AbpIdentityServerAppServiceBase, IPersistedGrantAppService
     {
         protected IPersistentGrantRepository PersistentGrantRepository { get; }
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
         public PersistedGrantAppService(
-            IPersistentGrantRepository persistentGrantRepository)
+            IPersistentGrantRepository persistentGrantRepository, IAuthorizationService authorizationService, IPermissionDefinitionManager permissionDefinitionManager)
         {
             PersistentGrantRepository = persistentGrantRepository;
+            _authorizationService = authorizationService;
+            _permissionDefinitionManager = permissionDefinitionManager;
         }
 
         [Authorize(AbpIdentityServerPermissions.Grants.Delete)]
@@ -36,6 +42,9 @@ namespace LINGYUN.Abp.IdentityServer.Grants
 
         public async virtual Task<PagedResultDto<PersistedGrantDto>> GetListAsync(GetPersistedGrantInput input)
         {
+            var s = await _authorizationService.AuthorizeAsync(CurrentUser, AbpIdentityServerPermissions.Grants.Default);
+            var pers = await _permissionDefinitionManager.GetPermissionsAsync();
+
             var persistenGrantCount = await PersistentGrantRepository
                 .GetCountAsync(
                     input.SubjectId, input.Filter);

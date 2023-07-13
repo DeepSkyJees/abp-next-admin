@@ -13,7 +13,7 @@ using Volo.Abp.Data;
 
 namespace LINGYUN.Abp.Saas.Tenants;
 
-[Authorize(AbpSaasPermissions.Tenants.Default)]
+//[Authorize(AbpSaasPermissions.Tenants.Default)]
 public class TenantAppService : AbpSaasAppServiceBase, ITenantAppService
 {
     protected IDistributedEventBus EventBus { get; }
@@ -67,7 +67,7 @@ public class TenantAppService : AbpSaasAppServiceBase, ITenantAppService
         );
     }
 
-    [Authorize(AbpSaasPermissions.Tenants.Create)]
+    //[Authorize(AbpSaasPermissions.Tenants.Create)]
     public async virtual Task<TenantDto> CreateAsync(TenantCreateDto input)
     {
         var tenant = await TenantManager.CreateAsync(input.Name);

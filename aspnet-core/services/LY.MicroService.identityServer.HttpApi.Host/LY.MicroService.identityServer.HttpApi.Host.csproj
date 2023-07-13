@@ -73,4 +73,8 @@
 		<ProjectReference Include="..\..\modules\saas\LINGYUN.Abp.Saas.EntityFrameworkCore\LINGYUN.Abp.Saas.EntityFrameworkCore.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DataSeeder\" />
+	</ItemGroup>
+
 </Project>

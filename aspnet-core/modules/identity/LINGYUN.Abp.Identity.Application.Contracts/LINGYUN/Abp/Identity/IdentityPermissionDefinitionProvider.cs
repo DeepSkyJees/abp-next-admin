@@ -9,6 +9,7 @@ namespace LINGYUN.Abp.Identity
     {
         public override void Define(IPermissionDefinitionContext context)
         {
+
             var identityGroup = context.GetGroupOrNull(Volo.Abp.Identity.IdentityPermissions.GroupName);
             if (identityGroup != null)
             {
