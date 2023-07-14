@@ -108,6 +108,7 @@ public partial class TaskManagementHttpApiHostModule : AbpModule
         ConfigureJsonSerializer(configuration);
         ConfigureDistributedLock(context.Services, configuration);
         ConfigureSecurity(context.Services, configuration, hostingEnvironment.IsDevelopment());
+        ConfigureSeedWorker(context.Services, hostingEnvironment.IsDevelopment());
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
