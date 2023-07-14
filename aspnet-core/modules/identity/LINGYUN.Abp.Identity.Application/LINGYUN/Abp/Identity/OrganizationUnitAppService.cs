@@ -19,18 +19,22 @@ namespace LINGYUN.Abp.Identity
         protected IIdentityRoleRepository RoleRepository { get; }
         protected IIdentityUserRepository UserRepository { get; }
 
+
+        private readonly IAuthorizationService _authorizationService;
+
         public OrganizationUnitAppService(
             IdentityUserManager userManager,
             IIdentityRoleRepository roleRepository,
             IIdentityUserRepository userRepository,
             OrganizationUnitManager organizationUnitManager,
-            IOrganizationUnitRepository organizationUnitRepository)
+            IOrganizationUnitRepository organizationUnitRepository, IAuthorizationService authorizationService)
         {
             UserManager = userManager;
             RoleRepository = roleRepository;
             UserRepository = userRepository;
             OrganizationUnitManager = organizationUnitManager;
             OrganizationUnitRepository = organizationUnitRepository;
+            _authorizationService = authorizationService;
 
             ObjectMapperContext = typeof(AbpIdentityApplicationModule);
         }
@@ -94,6 +98,7 @@ namespace LINGYUN.Abp.Identity
 
         public async virtual Task<ListResultDto<OrganizationUnitDto>> GetAllListAsync()
         {
+
             var origanizationUnits = await OrganizationUnitRepository.GetListAsync(false);
 
             return new ListResultDto<OrganizationUnitDto>(
@@ -126,8 +131,8 @@ namespace LINGYUN.Abp.Identity
                 .GetUnaddedRolesCountAsync(origanizationUnit, input.Filter);
 
             var origanizationUnitRoles = await OrganizationUnitRepository
-                .GetUnaddedRolesAsync(origanizationUnit, 
-                input.Sorting, input.MaxResultCount, 
+                .GetUnaddedRolesAsync(origanizationUnit,
+                input.Sorting, input.MaxResultCount,
                 input.SkipCount, input.Filter);
 
             return new PagedResultDto<IdentityRoleDto>(origanizationUnitRoleCount,
@@ -161,7 +166,7 @@ namespace LINGYUN.Abp.Identity
                 .GetUnaddedUsersCountAsync(origanizationUnit, input.Filter);
             var origanizationUnitUsers = await OrganizationUnitRepository
                 .GetUnaddedUsersAsync(origanizationUnit,
-                input.Sorting, input.MaxResultCount, 
+                input.Sorting, input.MaxResultCount,
                 input.SkipCount, input.Filter);
 
             return new PagedResultDto<IdentityUserDto>(origanizationUnitUserCount,

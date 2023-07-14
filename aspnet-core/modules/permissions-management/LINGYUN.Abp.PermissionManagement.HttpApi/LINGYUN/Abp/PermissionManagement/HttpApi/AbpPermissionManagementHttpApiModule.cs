@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LINGYUN.Abp.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.Localization;
@@ -8,7 +9,8 @@ namespace LINGYUN.Abp.PermissionManagement.HttpApi;
 
 [DependsOn(
     typeof(AbpPermissionManagementApplicationContractsModule),
-    typeof(VoloAbpPermissionManagementHttpApiModule))]
+    typeof(VoloAbpPermissionManagementHttpApiModule),
+    typeof(AbpIdentityApplicationContractsModule))]
 public class AbpPermissionManagementHttpApiModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)

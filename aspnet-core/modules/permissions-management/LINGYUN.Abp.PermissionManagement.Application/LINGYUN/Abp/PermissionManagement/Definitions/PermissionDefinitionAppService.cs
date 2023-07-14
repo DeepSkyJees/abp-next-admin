@@ -26,18 +26,21 @@ public class PermissionDefinitionAppService : PermissionManagementAppServiceBase
     private readonly IPermissionDefinitionRecordRepository _definitionRepository;
     private readonly IRepository<PermissionDefinitionRecord, Guid> _definitionBasicRepository;
 
+    private readonly IAuthorizationService _authorizationService;
+
     public PermissionDefinitionAppService(
         ILocalizableStringSerializer localizableStringSerializer, 
         IPermissionDefinitionManager permissionDefinitionManager,
         ISimpleStateCheckerSerializer simpleStateCheckerSerializer,
         IPermissionDefinitionRecordRepository definitionRepository, 
-        IRepository<PermissionDefinitionRecord, Guid> definitionBasicRepository)
+        IRepository<PermissionDefinitionRecord, Guid> definitionBasicRepository, IAuthorizationService authorizationService)
     {
         _localizableStringSerializer = localizableStringSerializer;
         _permissionDefinitionManager = permissionDefinitionManager;
         _simpleStateCheckerSerializer = simpleStateCheckerSerializer;
         _definitionRepository = definitionRepository;
         _definitionBasicRepository = definitionBasicRepository;
+        _authorizationService = authorizationService;
     }
 
     [Authorize(PermissionManagementPermissionNames.Definition.Create)]
